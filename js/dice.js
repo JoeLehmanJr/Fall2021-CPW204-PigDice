@@ -15,8 +15,9 @@ function getInput(id) {
     return document.getElementById(id);
 }
 function createNewGame() {
-    setTotals(0, "score1");
-    setTotals(0, "score2");
+    setValues(0, "score1");
+    setValues(0, "score2");
+    setValues(0, "total");
     var player_1 = getInput("player1");
     var player_2 = getInput("player2");
     if (player_1.value == "" || player_2.value == "" || player_1.value == player_2.value) {
@@ -26,7 +27,7 @@ function createNewGame() {
     else {
         changePlayers();
         getInput("turn").classList.add("open");
-        setTotals(0, "total");
+        setValues(0, "total");
         document.getElementById("player1").setAttribute("disabled", "disabled");
         document.getElementById("player2").setAttribute("disabled", "disabled");
     }
@@ -43,21 +44,22 @@ function changePlayers() {
     }
 }
 function rollDie() {
-    setTotals(0, "total");
+    var currTotal = getTotal();
     var currRoll = generateRandomValue();
     if (currRoll == 1) {
         changePlayers();
-        setTotals(0, "total");
+        setValues(0, "total");
     }
     else {
-        var currTotal = getTotal();
         currTotal += currRoll;
+        setValues(currRoll, "die");
+        setValues(currTotal, "total");
     }
 }
 function getTotal() {
     return parseInt(getInput("total").value);
 }
-function setTotals(score, id) {
+function setValues(score, id) {
     var currTotal = parseInt(getInput(id).value);
     currTotal = score;
 }

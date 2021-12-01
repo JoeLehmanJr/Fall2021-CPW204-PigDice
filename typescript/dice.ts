@@ -33,9 +33,9 @@ function generateRandomValue():number{
 
 function createNewGame(){
     //set player 1 and player 2 scores to 0
-    setTotals(0,"score1");
-    setTotals(0,"score2");
-
+    setValues(0,"score1");
+    setValues(0,"score2");
+    setValues(0, "total");
     //verify each player has a name
     let player_1 = getInput("player1");
     let player_2 = getInput("player2");
@@ -49,7 +49,7 @@ function createNewGame(){
     else{
         changePlayers();
         getInput("turn").classList.add("open");
-        setTotals(0, "total");
+        setValues(0, "total");
 
         //lock in player names and then change players
         document.getElementById("player1").setAttribute("disabled", "disabled");
@@ -74,7 +74,9 @@ function changePlayers():void{
 
 
 function rollDie():void{
-    setTotals(0, "total");
+    //get the current turn total
+    let currTotal = getTotal();
+
     //roll the die and get a random value 1 - 6 (use generateRandomValue function)
     let currRoll = generateRandomValue();
 
@@ -83,21 +85,18 @@ function rollDie():void{
         //  change players
         changePlayers();
         //  set current total to 0
-        setTotals(0, "total");
+        setValues(0, "total");
     }
     else{
-        //get the current turn total
-        let currTotal = getTotal();
 
         //if the roll is greater than 1
         //  add roll value to current total
         currTotal += currRoll;
+        //set the die roll to value player rolled
+        setValues(currRoll, "die")
+        //display current total on form
+        setValues(currTotal, "total");
     }
-
-
-
-    //set the die roll to value player rolled
-    //display current total on form
 }
 
 function getTotal():number {
@@ -105,7 +104,7 @@ function getTotal():number {
     return parseInt(getInput("total").value);
 }
 
-function setTotals(score:number, id:string):void{
+function setValues(score:number, id:string):void{
     let currTotal = parseInt(getInput(id).value);
     currTotal = score
 }
