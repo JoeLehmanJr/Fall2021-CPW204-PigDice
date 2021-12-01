@@ -1,12 +1,48 @@
-function generateRandomValue(minValue:number, maxValue:number):number{
-    var random = Math.random();
-    
-    //TODO: use random to generate a number between min and max
-
+window.onload = function(){
+    let newGameBtn = getInput("new_game");
+    newGameBtn.onclick = createNewGame;
+    getInput("roll").onclick =rollDie;
+    getInput("hold").onclick = holdDie;
+}
+function generateRandomValue():number{
+    var random = Math.floor(Math.random() * 6) + 1
     return random;
 }
 
 
+/**
+ * Helper function to getInputById and returns the HTMLInputElement referenced by id.
+ * @param id the id of the element you want to grab.
+ * @returns HTMLInputElement that is referenced by the id parameter
+ */
+ function getInput(id: string): HTMLInputElement {
+    return <HTMLInputElement>document.getElementById(id);
+}
+
+function createNewGame(){
+    //set player 1 and player 2 scores to 0
+    getInput("score1").value = "0";
+    getInput("score2").value = "0";
+
+    //verify each player has a name
+    let player_1 = getInput("player1");
+    let player_2 = getInput("player2");
+
+    //if both players don't have a name entered
+    if(player_1.value==""|| player_2.value =="" || player_1.value != player_2.value){
+        getInput("error").innerText = "Please make sure you have entered unique names in the player's name box."
+    }
+    //if both players do have a name start the game!
+    else{
+        document.getElementById("turn").classList.add("open");
+        getInput("total").value = "0";
+        
+        //lock in player names and then change players
+        document.getElementById("player1").setAttribute("disabled", "disabled");
+        document.getElementById("player2").setAttribute("disabled", "disabled");
+        changePlayers();
+    }
+}
 function changePlayers():void{
     let currentPlayerName = document.getElementById("current").innerText;
     let player1Name = (<HTMLInputElement>document.getElementById("player1")).value;
@@ -14,31 +50,15 @@ function changePlayers():void{
 
     //swap from player to player by comparing current name to player names
     //set currentPlayerName to the next player
+    if (currentPlayerName != player2Name || currentPlayerName != player1Name||currentPlayerName==player2Name){
+        currentPlayerName = player1Name
+    }
+    else{
+        currentPlayerName = player2Name
+    }
 }
 
-window.onload = function(){
-    let newGameBtn = document.getElementById("new_game");
-    newGameBtn.onclick = createNewGame;
 
-    document.getElementById("roll").onclick = rollDie;
-
-    document.getElementById("hold").onclick = holdDie;
-}
-
-function createNewGame(){
-    //set player 1 and player 2 scores to 0
-
-    //verify each player has a name
-    //if both players don't have a name display error
-
-    //if both players do have a name start the game!
-    document.getElementById("turn").classList.add("open");
-    (<HTMLInputElement>document.getElementById("total")).value = "0";
-    //lock in player names and then change players
-    document.getElementById("player1").setAttribute("disabled", "disabled");
-    document.getElementById("player2").setAttribute("disabled", "disabled");
-    changePlayers();
-}
 
 function rollDie():void{
     let currTotal = parseInt((<HTMLInputElement>document.getElementById("total")).value);
