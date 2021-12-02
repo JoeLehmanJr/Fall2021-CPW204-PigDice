@@ -75,7 +75,7 @@ function changePlayers():void{
 
 function rollDie():void{
     //get the current turn total
-    let currTotal = getTotal();
+    let currTotal = getTotal("total");
 
     //roll the die and get a random value 1 - 6 (use generateRandomValue function)
     let currRoll = generateRandomValue();
@@ -99,9 +99,9 @@ function rollDie():void{
     }
 }
 
-function getTotal():number {
+function getTotal(id:string):number {
     //get the current turn total
-    return parseInt(getInput("total").value);
+    return parseInt(getInput(id).value);
 }
 
 function setValues(score:number, id:string):void{
@@ -111,13 +111,27 @@ function setValues(score:number, id:string):void{
 
 function holdDie():void{
     //get the current turn total
+    let currTotal = getTotal("total");
 
     //determine who the current player is
+    let currentPlayerName = getInput("current").innerText;
+    let player1Name = getInput("player1").innerText;
+    let player2Name = getInput("player2").innerText;
 
     //add the current turn total to the player's total score
+    if(currentPlayerName == player1Name){
+        let score_1 = parseInt(getInput("score1").value);
+        let total = currTotal + score_1;
+        setValues(total, "score1");
+    }
+    else{
+        let score_2 = parseInt(getInput("score2").value);
+        let total = currTotal + score_2;
+        setValues(total, "score2");
+    }
 
     //reset the turn total to 0
-
+    setValues(0, "total");
     //change players
     changePlayers();
 }

@@ -44,7 +44,7 @@ function changePlayers() {
     }
 }
 function rollDie() {
-    var currTotal = getTotal();
+    var currTotal = getTotal("total");
     var currRoll = generateRandomValue();
     if (currRoll == 1) {
         changePlayers();
@@ -56,13 +56,28 @@ function rollDie() {
         setValues(currTotal, "total");
     }
 }
-function getTotal() {
-    return parseInt(getInput("total").value);
+function getTotal(id) {
+    return parseInt(getInput(id).value);
 }
 function setValues(score, id) {
     var currTotal = parseInt(getInput(id).value);
     currTotal = score;
 }
 function holdDie() {
+    var currTotal = getTotal("total");
+    var currentPlayerName = getInput("current").innerText;
+    var player1Name = getInput("player1").innerText;
+    var player2Name = getInput("player2").innerText;
+    if (currentPlayerName == player1Name) {
+        var score_1 = parseInt(getInput("score1").value);
+        var total = currTotal + score_1;
+        setValues(total, "score1");
+    }
+    else {
+        var score_2 = parseInt(getInput("score2").value);
+        var total = currTotal + score_2;
+        setValues(total, "score2");
+    }
+    setValues(0, "total");
     changePlayers();
 }
