@@ -1,20 +1,23 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: white;
-    margin: 0 auto;
+    margin: 2em auto;
     width: 450px;
-    border: 3px solid blue;
+
     padding: 0 2em 1em;
 }
+
 h1 {
     color: blue;
     margin-bottom: .25em;
 }
+
 label {
     width: 4em;
     text-align: right;
     padding-bottom: .5em;
 }
+
 input {
     width: 4em;
     margin-left: .5em;
@@ -42,4 +45,33 @@ fieldset {
 }
 #hold {
     margin-right: 2em;
+}
+
+#error {
+    color: red;
+}
+#winner{
+    display: none;
+    font-size: 1.5em;
+    color: green;
+    margin-top: 1.5em;
+    border: 3px solid blue;
+    padding: .5em;
+}
+
+#winner.open {
+    display:block;
+}
+
+#main {
+    width: 500px;
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+    border: 3px solid blue;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+#main.close {
+    display:none;
 }
